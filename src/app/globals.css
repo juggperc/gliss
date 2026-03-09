@@ -316,11 +316,8 @@ html[data-input-focus="true"] .keyboard-safe-bottom {
     scroll-behavior: auto;
   }
 
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  .aurora-button,
+  .aurora-button-muted {
+    animation-duration: 18s;
   }
 }
