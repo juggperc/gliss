@@ -72,7 +72,7 @@ export function ModelPicker() {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button type="button" variant="outline" className="h-11 w-full min-w-[240px] justify-between rounded-2xl bg-white/85 px-3 sm:w-[320px]">
+        <Button type="button" variant="outline" className="h-11 w-full min-w-0 justify-between rounded-[1rem] bg-background px-3 sm:min-w-[240px] sm:w-[320px]">
           <div className="flex min-w-0 items-center gap-2">
             <Cpu className="size-4 shrink-0" />
             <span className="truncate font-medium text-foreground">{selectedModel.name || "Select a model"}</span>
@@ -81,7 +81,7 @@ export function ModelPicker() {
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent align="start" className="w-[min(92vw,360px)] rounded-[24px] border border-border bg-popover p-0 shadow-sm">
+      <PopoverContent align="start" className="w-[min(92vw,360px)] rounded-[1.15rem] border border-border bg-popover p-0 shadow-sm">
         <div className="flex items-center gap-2 border-b border-border/70 px-4 py-3">
           <Search className="size-4 text-muted-foreground" />
           <Input

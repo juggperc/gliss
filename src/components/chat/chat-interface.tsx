@@ -285,7 +285,7 @@ export function ChatInterface() {
   const currentModeMeta = modeMeta.find((item) => item.id === mode) ?? modeMeta[0];
 
   return (
-    <section className="flex w-full flex-1 flex-col px-5 py-8 lg:px-8">
+    <section className="flex w-full flex-1 flex-col px-4 py-6 lg:px-8">
       <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col">
         {isInitialState ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-6 px-4 py-12 text-center">
@@ -303,7 +303,7 @@ export function ChatInterface() {
         ) : null}
 
         {!isInitialState ? (
-          <div className="space-y-5">
+          <div className="space-y-4">
             {messages.map((message) => {
               const usageLabel = formatUsd(message.meta?.usage?.estimatedCostUsd);
               const hasMetaChips = Boolean(message.meta?.mode || usageLabel || message.meta?.toolEvents?.length);
@@ -311,7 +311,7 @@ export function ChatInterface() {
               return (
                 <article
                   key={message.id}
-                  className={`border px-5 py-5 shadow-sm ${
+                  className={`border px-4 py-4 shadow-sm sm:px-5 sm:py-5 ${
                     message.role === "user"
                       ? "ml-auto max-w-[72rem] rounded-[1.5rem] border-border bg-muted/40"
                       : "rounded-[1.75rem] border-border bg-card"
@@ -348,7 +348,7 @@ export function ChatInterface() {
         ) : null}
       </div>
 
-      <div className="mx-auto mt-8 w-full max-w-5xl">
+      <div className="mx-auto mt-6 w-full max-w-5xl ios-safe-bottom">
         {notice ? (
           <div className={`mb-3 rounded-[1.15rem] border px-4 py-3 text-sm leading-7 shadow-sm ${
             notice.level === "error"
@@ -359,19 +359,19 @@ export function ChatInterface() {
           </div>
         ) : null}
 
-        <div className="rounded-[1.75rem] border border-border bg-card/96 p-5 shadow-[0_16px_40px_rgba(15,23,42,0.06)]">
+        <div className="rounded-[1.4rem] border border-border bg-card/96 p-4 shadow-[0_16px_40px_rgba(15,23,42,0.06)] sm:rounded-[1.75rem] sm:p-5">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <Tabs value={mode} onValueChange={(value) => setMode(value as FeatureMode)} className="w-full max-w-full flex-1">
-              <TabsList className="flex w-full flex-wrap justify-start gap-2 rounded-[1.15rem] border-0 bg-transparent p-0 shadow-none">
+              <TabsList className="no-scrollbar flex w-full max-w-full justify-start gap-2 overflow-x-auto rounded-[1.15rem] border-0 bg-transparent p-0 shadow-none">
                 {modeMeta.map((item) => (
-                  <TabsTrigger key={item.id} value={item.id} className="min-w-[132px] flex-none rounded-[1.1rem] sm:flex-1">
+                  <TabsTrigger key={item.id} value={item.id} className="min-w-[120px] flex-none rounded-[1rem] px-3 sm:min-w-[132px] sm:flex-1">
                     <item.icon className="size-4" />
                     {item.label}
                   </TabsTrigger>
                 ))}
               </TabsList>
             </Tabs>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <div className="hidden items-center gap-2 text-sm text-muted-foreground sm:flex">
               <span className="rounded-full border border-border bg-muted px-3 py-1 text-foreground">{currentModeMeta.label}</span>
             </div>
           </div>
@@ -387,7 +387,7 @@ export function ChatInterface() {
             }}
             placeholder="Ask Gliss to explain, quiz, coach, or review language material..."
             rows={3}
-            className="min-h-[136px] rounded-[1.25rem] border-border bg-background px-4 py-4 text-base leading-7 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]"
+            className="min-h-[120px] rounded-[1.1rem] border-border bg-background px-4 py-4 text-base leading-7 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)] sm:min-h-[136px] sm:rounded-[1.25rem]"
           />
 
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3">

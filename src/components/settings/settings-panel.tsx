@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Plus, Server, Settings, Shield, Users } from "lucide-react";
+import { Check, Copy, Eye, EyeOff, Plus, Server, Settings, Shield, Users } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -47,10 +47,28 @@ export function SettingsPanel() {
   const [councilDraft, setCouncilDraft] = useState(councilModels.join(", "));
   const [testingServerId, setTestingServerId] = useState<string | null>(null);
   const [panelMessage, setPanelMessage] = useState<string | null>(null);
+  const [showApiKey, setShowApiKey] = useState(false);
+  const [copiedApiKey, setCopiedApiKey] = useState(false);
 
   const hasServers = mcpServers.length > 0;
   const councilHelper = useMemo(() => councilModels.join(", "), [councilModels]);
   const hostedBrowser = useMemo(() => !isLocalBrowserRuntime(), []);
+
+  const handleCopyApiKey = async () => {
+    if (!openRouterKey) {
+      setPanelMessage("Add your OpenRouter key before copying it.");
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(openRouterKey);
+      setCopiedApiKey(true);
+      setPanelMessage("OpenRouter key copied.");
+      window.setTimeout(() => setCopiedApiKey(false), 1800);
+    } catch {
+      setPanelMessage("Unable to copy the key from this browser session.");
+    }
+  };
 
   const handleAddServer = () => {
     if (!newServer.name.trim() || !newServer.url.trim()) {
@@ -141,7 +159,7 @@ export function SettingsPanel() {
         </Button>
       </SheetTrigger>
       <SheetContent className="w-full border-l border-border/70 bg-background/98 p-0 sm:max-w-xl">
-        <SheetHeader className="border-b border-border/70 px-6 py-5">
+        <SheetHeader className="border-b border-border/70 px-5 py-4 sm:px-6 sm:py-5">
           <SheetTitle className="text-2xl font-semibold">Settings</SheetTitle>
           <SheetDescription>
             Configure models, browser-stored keys, and tool servers for this workspace.
@@ -149,7 +167,7 @@ export function SettingsPanel() {
         </SheetHeader>
 
         <div className="flex h-full min-h-0 flex-col">
-          <div className="flex gap-2 overflow-x-auto border-b border-border/70 px-4 py-3">
+          <div className="no-scrollbar flex gap-2 overflow-x-auto border-b border-border/70 px-4 py-3">
             {sectionMeta.map((item) => (
                 <Button
                   key={item.id}
@@ -164,7 +182,7 @@ export function SettingsPanel() {
             ))}
           </div>
 
-          <div className="flex-1 overflow-y-auto px-6 py-6">
+          <div className="flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6">
             {panelMessage ? (
               <div role="status" aria-live="polite" className="mb-5 rounded-2xl border border-border bg-muted px-4 py-3 text-sm leading-7 text-foreground">
                 {panelMessage}
@@ -173,15 +191,50 @@ export function SettingsPanel() {
 
             {section === "security" ? (
               <div className="space-y-5">
-                <div className="rounded-[28px] border border-border/70 bg-card/80 p-5 shadow-[0_18px_60px_rgba(15,23,42,0.06)]">
+                <div className="rounded-[1.4rem] border border-border/70 bg-card/80 p-4 shadow-[0_18px_60px_rgba(15,23,42,0.06)] sm:p-5">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">OpenRouter Key</p>
-                  <Input
-                    type="password"
-                    value={openRouterKey}
-                    onChange={(event) => setOpenRouterKey(event.target.value)}
-                    placeholder="sk-or-v1-..."
-                    className="mt-4 h-11 rounded-2xl bg-background"
-                  />
+                  <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+                    <div className="relative flex-1">
+                      <Input
+                        type={showApiKey ? "text" : "password"}
+                        value={openRouterKey}
+                        onChange={(event) => setOpenRouterKey(event.target.value)}
+                        placeholder="sk-or-v1-..."
+                        className="h-11 rounded-[1rem] bg-background pr-24"
+                        autoCapitalize="none"
+                        autoCorrect="off"
+                        autoComplete="off"
+                        spellCheck={false}
+                        inputMode="text"
+                      />
+                      <div className="absolute inset-y-0 right-2 flex items-center gap-1">
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon-xs"
+                          onClick={() => setShowApiKey((current) => !current)}
+                          className="rounded-[0.85rem]"
+                          aria-label={showApiKey ? "Hide OpenRouter key" : "Show OpenRouter key"}
+                        >
+                          {showApiKey ? <EyeOff className="size-3.5" /> : <Eye className="size-3.5" />}
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon-xs"
+                          onClick={() => void handleCopyApiKey()}
+                          className="rounded-[0.85rem]"
+                          aria-label="Copy OpenRouter key"
+                        >
+                          {copiedApiKey ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
+                        </Button>
+                      </div>
+                    </div>
+                    <Button type="button" variant="outline" onClick={() => void handleCopyApiKey()} className="rounded-[1rem] sm:min-w-[92px]">
+                      {copiedApiKey ? <Check className="size-4" /> : <Copy className="size-4" />}
+                      {copiedApiKey ? "Copied" : "Copy"}
+                    </Button>
+                  </div>
                   <p className="mt-3 text-sm leading-7 text-muted-foreground">
                     This key stays in your browser storage for the local app experience and is only sent when you make a request.
                   </p>

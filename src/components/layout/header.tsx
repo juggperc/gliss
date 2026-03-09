@@ -15,7 +15,7 @@ export function Header() {
   const [navOpen, setNavOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/92 px-5 py-4 backdrop-blur lg:px-8">
+    <header className="sticky top-0 z-40 border-b border-border bg-background/92 px-4 py-3 backdrop-blur ios-safe-top lg:px-8">
       <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-3 lg:hidden">
           <Sheet open={navOpen} onOpenChange={setNavOpen}>
