@@ -8,8 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Markdown } from "@/components/ui/markdown";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
-import type { ChatStreamEvent, FeatureMode, Message, ToolEvent } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import type { ChatStreamEvent, FeatureMode, ToolEvent } from "@/lib/types";
 import { useChatStore } from "@/store/use-chat-store";
 
 function formatUsd(value?: number) {
@@ -27,18 +26,6 @@ const modeMeta: Array<{ id: FeatureMode; label: string; icon: typeof BrainCircui
   { id: "flashcard", label: "Flashcards", icon: LayoutTemplate },
   { id: "council", label: "Council", icon: BrainCircuit },
 ];
-
-function messageLabel(message: Message) {
-  if (message.role === "user") {
-    return "You";
-  }
-
-  if (message.meta?.mode === "council") {
-    return "Gliss Council";
-  }
-
-  return "Gliss";
-}
 
 export function ChatInterface() {
   const {
@@ -61,6 +48,7 @@ export function ChatInterface() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [notice, setNotice] = useState<{ level: "info" | "warning" | "error"; message: string } | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
+  const scrollFrameRef = useRef<number | null>(null);
 
   const chat = activeChatId ? chats[activeChatId] : null;
   const messages = chat?.messages ?? [];
@@ -69,8 +57,32 @@ export function ChatInterface() {
   const lastMessageContent = messages[messages.length - 1]?.content ?? "";
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-  }, [messages.length, lastMessageContent]);
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const viewportBottom = window.scrollY + window.innerHeight;
+    const documentBottom = document.documentElement.scrollHeight;
+    const distanceFromBottom = documentBottom - viewportBottom;
+
+    if (distanceFromBottom > 240 && !isGenerating) {
+      return;
+    }
+
+    if (scrollFrameRef.current != null) {
+      cancelAnimationFrame(scrollFrameRef.current);
+    }
+
+    scrollFrameRef.current = window.requestAnimationFrame(() => {
+      bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    });
+
+    return () => {
+      if (scrollFrameRef.current != null) {
+        cancelAnimationFrame(scrollFrameRef.current);
+      }
+    };
+  }, [messages.length, lastMessageContent, isGenerating]);
 
   const handleSend = async () => {
     const prompt = input.trim();
@@ -291,30 +303,31 @@ export function ChatInterface() {
         ) : null}
 
         {!isInitialState ? (
-          <div className="space-y-6">
+          <div className="space-y-5">
             {messages.map((message) => {
               const usageLabel = formatUsd(message.meta?.usage?.estimatedCostUsd);
+              const hasMetaChips = Boolean(message.meta?.mode || usageLabel || message.meta?.toolEvents?.length);
 
               return (
                 <article
                   key={message.id}
-                  className={cn(
-                    "rounded-[28px] border px-5 py-5 shadow-sm",
+                  className={`border px-5 py-5 shadow-sm ${
                     message.role === "user"
-                      ? "ml-auto max-w-[72rem] border-border bg-muted/40"
-                      : "border-border bg-card",
-                  )}
+                      ? "ml-auto max-w-[72rem] rounded-[1.5rem] border-border bg-muted/40"
+                      : "rounded-[1.75rem] border-border bg-card"
+                  }`}
                 >
-                  <div className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                    <span>{messageLabel(message)}</span>
-                    {message.meta?.mode ? <span className="rounded-full bg-muted px-2 py-1 tracking-normal normal-case">{message.meta.mode}</span> : null}
-                    {usageLabel ? <span className="rounded-full bg-muted px-2 py-1 tracking-normal normal-case">{usageLabel}</span> : null}
-                    {message.meta?.toolEvents?.length ? (
-                      <span className="rounded-full bg-muted px-2 py-1 tracking-normal normal-case">{message.meta.toolEvents.length} tool events</span>
-                    ) : null}
-                  </div>
+                  {hasMetaChips ? (
+                    <div className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                      {message.meta?.mode ? <span className="rounded-full bg-muted px-2.5 py-1 tracking-normal normal-case">{message.meta.mode}</span> : null}
+                      {usageLabel ? <span className="rounded-full bg-muted px-2.5 py-1 tracking-normal normal-case">{usageLabel}</span> : null}
+                      {message.meta?.toolEvents?.length ? (
+                        <span className="rounded-full bg-muted px-2.5 py-1 tracking-normal normal-case">{message.meta.toolEvents.length} tool events</span>
+                      ) : null}
+                    </div>
+                  ) : null}
 
-                  <div className="mt-4">
+                  <div className={hasMetaChips ? "mt-4" : ""}>
                     {message.role === "assistant" ? (
                       message.content ? (
                         <Markdown content={message.content} />
@@ -337,24 +350,21 @@ export function ChatInterface() {
 
       <div className="mx-auto mt-8 w-full max-w-5xl">
         {notice ? (
-          <div className={cn(
-            "mb-3 rounded-2xl border px-4 py-3 text-sm leading-7 shadow-sm",
+          <div className={`mb-3 rounded-[1.15rem] border px-4 py-3 text-sm leading-7 shadow-sm ${
             notice.level === "error"
               ? "border-destructive/20 bg-destructive/10 text-destructive"
-              : notice.level === "warning"
-                ? "border-border bg-muted text-foreground"
-                : "border-border bg-muted text-foreground",
-          )} role="status" aria-live="polite">
+              : "border-border bg-muted text-foreground"
+          }`} role="status" aria-live="polite">
             {notice.message}
           </div>
         ) : null}
 
-        <div className="rounded-[32px] border border-border bg-card/96 p-4 shadow-sm">
-          <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+        <div className="rounded-[1.75rem] border border-border bg-card/96 p-5 shadow-[0_16px_40px_rgba(15,23,42,0.06)]">
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <Tabs value={mode} onValueChange={(value) => setMode(value as FeatureMode)} className="w-full max-w-full flex-1">
-              <TabsList className="flex w-full flex-wrap justify-start gap-2 rounded-[1.35rem] border-0 bg-transparent p-0 shadow-none">
+              <TabsList className="flex w-full flex-wrap justify-start gap-2 rounded-[1.15rem] border-0 bg-transparent p-0 shadow-none">
                 {modeMeta.map((item) => (
-                  <TabsTrigger key={item.id} value={item.id} className="min-w-[140px] flex-none rounded-2xl sm:flex-1">
+                  <TabsTrigger key={item.id} value={item.id} className="min-w-[132px] flex-none rounded-[1.1rem] sm:flex-1">
                     <item.icon className="size-4" />
                     {item.label}
                   </TabsTrigger>
@@ -377,7 +387,7 @@ export function ChatInterface() {
             }}
             placeholder="Ask Gliss to explain, quiz, coach, or review language material..."
             rows={3}
-            className="min-h-[136px] rounded-[24px] border-border bg-background px-4 py-4 text-base leading-7"
+            className="min-h-[136px] rounded-[1.25rem] border-border bg-background px-4 py-4 text-base leading-7 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]"
           />
 
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3">

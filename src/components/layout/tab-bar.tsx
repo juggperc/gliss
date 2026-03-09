@@ -24,15 +24,15 @@ export function TabBar() {
 
   return (
     <footer className="border-t border-border bg-background/92 px-5 py-4 backdrop-blur lg:px-8">
-      <div className="flex w-full items-center justify-between gap-4">
-        <div className="flex flex-1 items-center gap-2">
+      <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4">
+        <div className="mx-auto flex items-center gap-2">
           {tabs.map((tab) => (
             <Button
               key={tab.id}
               type="button"
               variant={activeView === tab.id ? "aurora" : "aurora-muted"}
               onClick={() => setActiveView(tab.id)}
-              className="flex-1 rounded-2xl"
+              className="min-w-[118px] rounded-[1.1rem] px-4"
             >
               <tab.icon className="size-4" />
               <span className="hidden sm:inline">{tab.label}</span>

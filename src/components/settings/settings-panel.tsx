@@ -136,11 +136,11 @@ export function SettingsPanel() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button type="button" variant="outline" size="icon" className="rounded-2xl bg-white/80">
+        <Button type="button" variant="outline" size="icon" className="rounded-[1rem] bg-background">
           <Settings className="size-4 text-foreground" />
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-full border-l border-border/70 bg-[rgba(249,250,251,0.98)] p-0 sm:max-w-xl">
+      <SheetContent className="w-full border-l border-border/70 bg-background/98 p-0 sm:max-w-xl">
         <SheetHeader className="border-b border-border/70 px-6 py-5">
           <SheetTitle className="text-2xl font-semibold">Settings</SheetTitle>
           <SheetDescription>
@@ -151,13 +151,13 @@ export function SettingsPanel() {
         <div className="flex h-full min-h-0 flex-col">
           <div className="flex gap-2 overflow-x-auto border-b border-border/70 px-4 py-3">
             {sectionMeta.map((item) => (
-              <Button
-                key={item.id}
-                type="button"
-                variant={section === item.id ? "secondary" : "ghost"}
-                onClick={() => setSection(item.id)}
-                className="rounded-2xl"
-              >
+                <Button
+                  key={item.id}
+                  type="button"
+                  variant={section === item.id ? "secondary" : "ghost"}
+                  onClick={() => setSection(item.id)}
+                  className="rounded-[1rem]"
+                >
                 <item.icon className="size-4" />
                 {item.label}
               </Button>
