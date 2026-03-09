@@ -17,6 +17,8 @@ const buttonVariants = cva(
         ghost: "text-muted-foreground hover:bg-muted/70 hover:text-foreground",
         destructive: "bg-destructive text-white shadow-sm hover:bg-destructive/90",
         link: "text-primary underline-offset-4 hover:underline",
+        aurora: "aurora-button text-white shadow-[0_12px_30px_rgba(15,23,42,0.16)]",
+        "aurora-muted": "aurora-button aurora-button-muted text-white/90 shadow-[0_10px_24px_rgba(15,23,42,0.10)]",
       },
       size: {
         default: "h-10 px-4 py-2",

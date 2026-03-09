@@ -4,7 +4,6 @@ import "./globals.css";
 
 import { Header } from "@/components/layout/header";
 import { Sidebar } from "@/components/layout/sidebar";
-import { ThemeProvider } from "@/components/theme-provider";
 import { TabBar } from "@/components/layout/tab-bar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
@@ -24,22 +23,20 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body className={`${GeistMono.className} ${GeistMono.variable} bg-background text-foreground antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <TooltipProvider>
-            <div className="min-h-dvh bg-background">
-              <div className="flex min-h-dvh w-full">
-                <Sidebar />
-                <div className="flex min-w-0 flex-1 flex-col">
-                  <Header />
-                  <main className="flex min-h-0 flex-1 flex-col">{children}</main>
-                  <TabBar />
-                </div>
+        <TooltipProvider>
+          <div className="min-h-dvh bg-background">
+            <div className="flex min-h-dvh w-full">
+              <Sidebar />
+              <div className="flex min-w-0 flex-1 flex-col">
+                <Header />
+                <main className="flex min-h-0 flex-1 flex-col">{children}</main>
+                <TabBar />
               </div>
             </div>
-          </TooltipProvider>
-        </ThemeProvider>
+          </div>
+        </TooltipProvider>
       </body>
     </html>
   );

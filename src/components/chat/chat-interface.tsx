@@ -349,10 +349,10 @@ export function ChatInterface() {
           </div>
         ) : null}
 
-        <div className="rounded-[32px] border border-border bg-card p-4 shadow-sm">
+        <div className="rounded-[32px] border border-border bg-card/96 p-4 shadow-sm">
           <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
             <Tabs value={mode} onValueChange={(value) => setMode(value as FeatureMode)} className="w-full max-w-full flex-1">
-              <TabsList className="flex w-full flex-wrap justify-start rounded-[1.35rem]">
+              <TabsList className="flex w-full flex-wrap justify-start gap-2 rounded-[1.35rem] border-0 bg-transparent p-0 shadow-none">
                 {modeMeta.map((item) => (
                   <TabsTrigger key={item.id} value={item.id} className="min-w-[140px] flex-none rounded-2xl sm:flex-1">
                     <item.icon className="size-4" />

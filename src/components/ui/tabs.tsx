@@ -11,7 +11,7 @@ function Tabs({ className, ...props }: React.ComponentProps<typeof TabsPrimitive
 }
 
 const tabsListVariants = cva(
-  "inline-flex w-fit items-center gap-1 rounded-2xl border border-border/70 bg-white/80 p-1 shadow-sm",
+  "inline-flex w-fit items-center gap-1 rounded-2xl border border-border/70 bg-card p-1 shadow-sm",
   {
     variants: {
       variant: {
@@ -34,7 +34,7 @@ function TabsTrigger({ className, ...props }: React.ComponentProps<typeof TabsPr
     <TabsPrimitive.Trigger
       data-slot="tabs-trigger"
       className={cn(
-        "inline-flex min-h-10 flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-medium text-muted-foreground transition focus-visible:ring-2 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-[0_10px_25px_rgba(14,165,233,0.18)]",
+        "aurora-button aurora-button-muted inline-flex min-h-10 flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-medium text-white transition-all focus-visible:ring-2 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:opacity-100 data-[state=inactive]:opacity-75",
         className,
       )}
       {...props}

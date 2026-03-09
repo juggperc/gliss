@@ -23,14 +23,14 @@ export function TabBar() {
   ];
 
   return (
-    <footer className="border-t border-border/70 bg-[rgba(255,255,255,0.86)] px-5 py-4 backdrop-blur-xl lg:px-8">
+    <footer className="border-t border-border bg-background/92 px-5 py-4 backdrop-blur lg:px-8">
       <div className="flex w-full items-center justify-between gap-4">
         <div className="flex flex-1 items-center gap-2">
           {tabs.map((tab) => (
             <Button
               key={tab.id}
               type="button"
-              variant={activeView === tab.id ? "default" : "ghost"}
+              variant={activeView === tab.id ? "aurora" : "aurora-muted"}
               onClick={() => setActiveView(tab.id)}
               className="flex-1 rounded-2xl"
             >
