@@ -7,7 +7,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "touch-manipulation inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-300 ease-[cubic-bezier(0.2,0.8,0.2,1)] outline-none active:scale-[0.985] focus-visible:ring-2 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 disabled:active:scale-100 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "touch-manipulation inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-300 ease-[cubic-bezier(0.2,0.8,0.2,1)] outline-none will-change-transform active:scale-[0.985] focus-visible:ring-2 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 disabled:active:scale-100 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
@@ -21,13 +21,13 @@ const buttonVariants = cva(
         "aurora-muted": "aurora-button aurora-button-muted text-white/90",
       },
       size: {
-        default: "h-10 px-4 py-2",
+        default: "h-11 px-4 py-2 sm:h-10",
         xs: "h-7 rounded-[0.85rem] px-2.5 text-xs",
-        sm: "h-8 rounded-[0.95rem] px-3 text-sm",
+        sm: "h-10 rounded-[0.95rem] px-3 text-sm sm:h-8",
         lg: "h-11 rounded-xl px-5 text-sm",
         icon: "size-10",
-        "icon-xs": "size-7 rounded-[0.85rem]",
-        "icon-sm": "size-8 rounded-[0.95rem]",
+        "icon-xs": "size-10 rounded-[0.95rem] sm:size-8",
+        "icon-sm": "size-10 rounded-[0.95rem] sm:size-9",
         "icon-lg": "size-11 rounded-xl",
       },
     },

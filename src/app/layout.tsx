@@ -3,6 +3,7 @@ import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 
 import { Header } from "@/components/layout/header";
+import { MobileViewportSync } from "@/components/layout/mobile-viewport-sync";
 import { Sidebar } from "@/components/layout/sidebar";
 import { TabBar } from "@/components/layout/tab-bar";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -26,9 +27,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body className={`${GeistMono.className} ${GeistMono.variable} bg-background text-foreground antialiased`}>
+        <MobileViewportSync />
         <TooltipProvider>
-          <div className="min-h-dvh bg-background">
-            <div className="flex min-h-dvh w-full">
+          <div className="app-shell bg-background">
+            <div className="flex min-h-[var(--visual-viewport-height)] w-full">
               <Sidebar />
               <div className="flex min-w-0 flex-1 flex-col">
                 <Header />

@@ -48,6 +48,7 @@ export function ChatInterface() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [notice, setNotice] = useState<{ level: "info" | "warning" | "error"; message: string } | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
+  const composerRef = useRef<HTMLDivElement | null>(null);
   const scrollFrameRef = useRef<number | null>(null);
 
   const chat = activeChatId ? chats[activeChatId] : null;
@@ -348,7 +349,7 @@ export function ChatInterface() {
         ) : null}
       </div>
 
-      <div className="mx-auto mt-6 w-full max-w-5xl ios-safe-bottom">
+      <div ref={composerRef} className="mx-auto mt-6 w-full max-w-5xl keyboard-safe-bottom">
         {notice ? (
           <div className={`mb-3 rounded-[1.15rem] border px-4 py-3 text-sm leading-7 shadow-sm ${
             notice.level === "error"
@@ -362,7 +363,7 @@ export function ChatInterface() {
         <div className="rounded-[1.4rem] border border-border bg-card/96 p-4 shadow-[0_16px_40px_rgba(15,23,42,0.06)] sm:rounded-[1.75rem] sm:p-5">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <Tabs value={mode} onValueChange={(value) => setMode(value as FeatureMode)} className="w-full max-w-full flex-1">
-              <TabsList className="no-scrollbar flex w-full max-w-full justify-start gap-2 overflow-x-auto rounded-[1.15rem] border-0 bg-transparent p-0 shadow-none">
+              <TabsList className="no-scrollbar momentum-scroll flex w-full max-w-full justify-start gap-2 overflow-x-auto rounded-[1.15rem] border-0 bg-transparent p-0 shadow-none">
                 {modeMeta.map((item) => (
                   <TabsTrigger key={item.id} value={item.id} className="min-w-[120px] flex-none rounded-[1rem] px-3 sm:min-w-[132px] sm:flex-1">
                     <item.icon className="size-4" />
@@ -379,6 +380,11 @@ export function ChatInterface() {
           <Textarea
             value={input}
             onChange={(event) => setInput(event.target.value)}
+            onFocus={() => {
+              window.setTimeout(() => {
+                composerRef.current?.scrollIntoView({ block: "end", behavior: "smooth" });
+              }, 140);
+            }}
             onKeyDown={(event) => {
               if (event.key === "Enter" && !event.shiftKey) {
                 event.preventDefault();
@@ -390,7 +396,7 @@ export function ChatInterface() {
             className="min-h-[120px] rounded-[1.1rem] border-border bg-background px-4 py-4 text-base leading-7 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)] sm:min-h-[136px] sm:rounded-[1.25rem]"
           />
 
-          <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+          <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-wrap items-center gap-3">
               <ModelPicker />
               <div className="inline-flex items-center gap-2 rounded-2xl border border-border bg-background px-4 py-2 text-sm text-muted-foreground">
@@ -398,7 +404,12 @@ export function ChatInterface() {
                 {activeToolsCount} connected tools
               </div>
             </div>
-            <Button type="button" onClick={() => void handleSend()} disabled={!input.trim() || isGenerating} className="rounded-2xl px-5">
+            <Button
+              type="button"
+              onClick={() => void handleSend()}
+              disabled={!input.trim() || isGenerating}
+              className="w-full rounded-2xl px-5 sm:w-auto"
+            >
               {isGenerating ? "Working..." : "Send"}
               <ArrowUp className="size-4" />
             </Button>

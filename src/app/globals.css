@@ -38,6 +38,8 @@
 }
 
 :root {
+  --visual-viewport-height: 100dvh;
+  --keyboard-inset: 0px;
   --background: oklch(0.945 0.002 260);
   --foreground: oklch(0.18 0.01 264);
   --card: oklch(0.975 0.002 260);
@@ -74,11 +76,13 @@
 
   html {
     @apply scroll-smooth font-sans;
+    min-height: 100%;
     -webkit-text-size-adjust: 100%;
   }
 
   body {
     @apply bg-background text-foreground font-sans;
+    min-height: 100%;
     -webkit-tap-highlight-color: transparent;
     overscroll-behavior-y: none;
   }
@@ -260,6 +264,10 @@
     perspective: 1000px;
   }
 
+  .app-shell {
+    min-height: var(--visual-viewport-height);
+  }
+
   .transform-style-3d {
     transform-style: preserve-3d;
   }
@@ -276,8 +284,17 @@
     padding-bottom: max(1rem, env(safe-area-inset-bottom));
   }
 
+  .keyboard-safe-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+
   .touch-manipulation {
     touch-action: manipulation;
+  }
+
+  .momentum-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
   }
 
   .no-scrollbar {
@@ -287,5 +304,23 @@
 
   .no-scrollbar::-webkit-scrollbar {
     display: none;
+  }
+}
+
+html[data-input-focus="true"] .keyboard-safe-bottom {
+  padding-bottom: calc(max(1rem, env(safe-area-inset-bottom)) + clamp(0px, calc(var(--keyboard-inset) * 0.45), 9rem));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

@@ -14,7 +14,7 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        "hidden h-dvh shrink-0 border-r border-border bg-sidebar/96 px-4 py-4 transition-[width,padding] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:flex lg:flex-col",
+        "hidden h-[var(--visual-viewport-height)] shrink-0 border-r border-border bg-sidebar/96 px-4 py-4 transition-[width,padding] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:flex lg:flex-col",
         collapsed ? "w-[116px]" : "w-[348px]",
       )}
     >

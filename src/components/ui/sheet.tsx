@@ -27,7 +27,7 @@ function SheetOverlay({ className, ...props }: React.ComponentProps<typeof Dialo
   return (
     <DialogPrimitive.Overlay
       data-slot="sheet-overlay"
-      className={cn("fixed inset-0 z-50 bg-slate-950/18 backdrop-blur-sm data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0", className)}
+      className={cn("fixed inset-0 z-50 bg-slate-950/18 backdrop-blur-sm transition-opacity duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0", className)}
       {...props}
     />
   )
@@ -47,7 +47,7 @@ function SheetContent({ className, children, side = "right", showCloseButton = t
       <DialogPrimitive.Content
         data-slot="sheet-content"
         className={cn(
-          "fixed z-50 flex flex-col gap-4 border-border/70 bg-background/98 p-5 shadow-[0_24px_80px_rgba(15,23,42,0.18)] transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 ios-safe-bottom",
+          "fixed z-50 flex flex-col gap-4 border-border/70 bg-background/98 p-5 shadow-[0_24px_80px_rgba(15,23,42,0.18)] transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 ios-safe-bottom",
           sheetVariants[side],
           className,
         )}

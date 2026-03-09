@@ -167,22 +167,22 @@ export function SettingsPanel() {
         </SheetHeader>
 
         <div className="flex h-full min-h-0 flex-col">
-          <div className="no-scrollbar flex gap-2 overflow-x-auto border-b border-border/70 px-4 py-3">
+          <div className="no-scrollbar momentum-scroll flex gap-2 overflow-x-auto border-b border-border/70 px-4 py-3">
             {sectionMeta.map((item) => (
-                <Button
-                  key={item.id}
-                  type="button"
-                  variant={section === item.id ? "secondary" : "ghost"}
-                  onClick={() => setSection(item.id)}
-                  className="rounded-[1rem]"
-                >
+              <Button
+                key={item.id}
+                type="button"
+                variant={section === item.id ? "secondary" : "ghost"}
+                onClick={() => setSection(item.id)}
+                className="rounded-[1rem]"
+              >
                 <item.icon className="size-4" />
                 {item.label}
               </Button>
             ))}
           </div>
 
-          <div className="flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6">
+          <div className="momentum-scroll flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6">
             {panelMessage ? (
               <div role="status" aria-live="polite" className="mb-5 rounded-2xl border border-border bg-muted px-4 py-3 text-sm leading-7 text-foreground">
                 {panelMessage}
@@ -267,7 +267,7 @@ export function SettingsPanel() {
                     <select
                       value={newServer.transport}
                       onChange={(event) => setNewServer((current) => ({ ...current, transport: event.target.value as MCPServer["transport"] }))}
-                      className="h-11 rounded-2xl border border-input bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-primary/30"
+                      className="h-11 rounded-2xl border border-input bg-background px-3 text-base outline-none focus:ring-2 focus:ring-primary/30 sm:text-sm"
                     >
                       <option value="auto">Auto detect</option>
                       <option value="streamable-http">Streamable HTTP</option>

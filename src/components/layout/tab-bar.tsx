@@ -25,7 +25,7 @@ export function TabBar() {
   return (
     <footer className="border-t border-border bg-background/92 px-4 py-3 backdrop-blur ios-safe-bottom lg:px-8">
       <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-3">
-        <div className="no-scrollbar mx-auto flex max-w-full items-center gap-2 overflow-x-auto">
+        <div className="no-scrollbar momentum-scroll mx-auto flex max-w-full items-center gap-2 overflow-x-auto">
           {tabs.map((tab) => (
             <Button
               key={tab.id}

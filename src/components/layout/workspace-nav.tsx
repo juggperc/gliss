@@ -103,7 +103,7 @@ export function WorkspaceNav({ compact = false, onNavigate }: WorkspaceNavProps)
             Your conversations will show up here once you start chatting.
           </div>
         ) : (
-          <div className="space-y-1.5 overflow-y-auto pr-1">
+          <div className="momentum-scroll space-y-1.5 overflow-y-auto pr-1">
             {chatList.map((chat) => (
               <div key={chat.id} className="group flex items-center gap-2 rounded-2xl border border-transparent px-2 py-1 transition hover:border-border/70 hover:bg-muted/40">
                 <Button
