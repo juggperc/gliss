@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Check, ChevronsUpDown, Cpu, Search } from "lucide-react";
 
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -70,12 +71,14 @@ export function ModelPicker() {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger className="flex h-11 w-full min-w-[240px] items-center justify-between rounded-2xl border border-border/70 bg-white/80 px-3 py-2 text-sm shadow-sm transition hover:border-primary/40 hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 sm:w-[280px]">
-        <div className="flex min-w-0 items-center gap-2">
-          <Cpu className="size-4 shrink-0 text-sky-700" />
-          <span className="truncate font-medium text-foreground">{selectedModel.name || "Select a model"}</span>
-        </div>
-        <ChevronsUpDown className="size-4 shrink-0 text-muted-foreground" />
+      <PopoverTrigger asChild>
+        <Button type="button" variant="outline" className="h-11 w-full min-w-[240px] justify-between rounded-2xl bg-white/85 px-3 sm:w-[320px]">
+          <div className="flex min-w-0 items-center gap-2">
+            <Cpu className="size-4 shrink-0 text-sky-700" />
+            <span className="truncate font-medium text-foreground">{selectedModel.name || "Select a model"}</span>
+          </div>
+          <ChevronsUpDown className="size-4 shrink-0 text-muted-foreground" />
+        </Button>
       </PopoverTrigger>
 
       <PopoverContent align="start" className="w-[min(92vw,360px)] rounded-[24px] border border-border/70 bg-white/96 p-0 shadow-[0_18px_60px_rgba(15,23,42,0.14)]">

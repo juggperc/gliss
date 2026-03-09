@@ -15,7 +15,7 @@ export function CouncilActivityView() {
 
   if (runs.length === 0) {
     return (
-      <section className="mx-auto flex w-full max-w-5xl flex-1 items-center justify-center px-4 py-12 md:px-6">
+      <section className="flex w-full flex-1 items-center justify-center px-5 py-12 lg:px-8">
         <div className="max-w-lg rounded-[32px] border border-dashed border-border bg-card/80 px-8 py-10 text-center shadow-[0_18px_60px_rgba(15,23,42,0.06)]">
           <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-muted text-sky-700">
             <BrainCircuit className="size-7" />
@@ -33,7 +33,7 @@ export function CouncilActivityView() {
   }
 
   return (
-    <section className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-6 px-4 py-6 md:px-6 md:py-8">
+    <section className="flex w-full flex-1 flex-col gap-6 px-5 py-6 lg:px-8 lg:py-8">
       <div className="rounded-[32px] border border-border/70 bg-card/80 px-6 py-6 shadow-[0_18px_60px_rgba(15,23,42,0.06)]">
         <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">Council Activity</p>
         <h1 className="mt-3 text-3xl font-semibold text-foreground">Every review pass, critique, and tool event</h1>

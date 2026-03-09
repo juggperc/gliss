@@ -13,8 +13,8 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        "hidden h-screen shrink-0 border-r border-border/70 bg-white/70 px-4 py-4 backdrop-blur-xl lg:flex lg:flex-col",
-        collapsed ? "w-[112px]" : "w-[320px]",
+        "hidden h-dvh shrink-0 border-r border-border/70 bg-white/72 px-4 py-4 backdrop-blur-xl lg:flex lg:flex-col",
+        collapsed ? "w-[116px]" : "w-[348px]",
       )}
     >
       <div className="mb-4 flex items-center justify-end">

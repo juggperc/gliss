@@ -18,11 +18,11 @@ import { useChatStore } from "@/store/use-chat-store";
 
 function BrandLockup() {
   return (
-    <div className="flex items-center gap-3">
-      <div className="relative size-11 overflow-hidden rounded-2xl bg-white shadow-[0_12px_30px_rgba(14,165,233,0.12)] ring-1 ring-sky-100">
-        <Image src="/logomark.png" alt="Gliss logo" fill className="object-contain p-1.5" priority />
+    <div className="flex items-center gap-4">
+      <div className="relative size-14 overflow-hidden rounded-[1.35rem] bg-white shadow-[0_16px_36px_rgba(14,165,233,0.16)] ring-1 ring-sky-100">
+        <Image src="/logomark.png" alt="Gliss logo" fill className="object-contain p-1" priority />
       </div>
-      <div className="relative h-8 w-[132px] sm:w-[156px]">
+      <div className="relative h-10 w-[170px] sm:w-[210px]">
         <Image src="/wordmark.png" alt="Gliss" fill className="object-contain object-left" priority />
       </div>
     </div>
@@ -49,13 +49,15 @@ export function Header() {
         : "Inspect every council run, critique, and tool call";
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/70 bg-[rgba(249,250,251,0.82)] px-4 py-3 backdrop-blur-xl md:px-6">
+    <header className="sticky top-0 z-40 border-b border-border/70 bg-[rgba(249,250,251,0.86)] px-5 py-4 backdrop-blur-xl lg:px-8">
       <div className="flex items-center justify-between gap-4">
         <div className="flex min-w-0 items-center gap-3">
           <div className="lg:hidden">
             <Sheet open={navOpen} onOpenChange={setNavOpen}>
-              <SheetTrigger render={<Button variant="ghost" size="icon" className="rounded-2xl" aria-label="Open workspace navigation" />}>
-                <Menu className="size-4" />
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="rounded-2xl" aria-label="Open workspace navigation">
+                  <Menu className="size-4" />
+                </Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-[92vw] max-w-sm border-r border-border/70 bg-[rgba(249,250,251,0.97)] p-4">
                 <SheetHeader className="px-0 pb-4">
@@ -68,12 +70,12 @@ export function Header() {
           <BrandLockup />
           <div className="hidden min-w-0 md:block">
             <p className="truncate text-sm font-semibold text-foreground">{heading}</p>
-            <p className="truncate text-sm text-muted-foreground">{subheading}</p>
+            <p className="truncate text-xs uppercase tracking-[0.22em] text-muted-foreground">{subheading}</p>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
-          <Button type="button" variant="secondary" onClick={() => createChat()} className="rounded-2xl">
+          <Button type="button" variant="secondary" onClick={() => createChat()} className="rounded-2xl border border-border/70 bg-white/80">
             <MessageSquarePlus className="size-4" />
             <span className="hidden sm:inline">New Chat</span>
           </Button>

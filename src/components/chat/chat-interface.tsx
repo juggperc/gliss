@@ -6,6 +6,7 @@ import { ArrowUp, BookOpen, BrainCircuit, LayoutTemplate, PenTool, Wrench } from
 import { ModelPicker } from "@/components/chat/model-picker";
 import { Button } from "@/components/ui/button";
 import { Markdown } from "@/components/ui/markdown";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import type { ChatStreamEvent, FeatureMode, Message, ToolEvent } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -272,14 +273,14 @@ export function ChatInterface() {
   const currentModeMeta = modeMeta.find((item) => item.id === mode) ?? modeMeta[0];
 
   return (
-    <section className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-4 py-6 md:px-6 md:py-8">
-      <div className="rounded-[32px] border border-border/70 bg-card/80 px-6 py-6 shadow-[0_18px_60px_rgba(15,23,42,0.06)]">
+    <section className="flex w-full flex-1 flex-col px-5 py-6 lg:px-8 lg:py-8">
+      <div className="flex flex-1 flex-col rounded-[32px] border border-border/70 bg-card/80 px-6 py-6 shadow-[0_18px_60px_rgba(15,23,42,0.06)] lg:px-8">
         {isInitialState ? (
           <div className="space-y-6">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">Gliss</p>
-              <h1 className="mt-3 text-3xl font-semibold text-foreground md:text-4xl">Language learning that is finally built out.</h1>
-              <p className="mt-3 max-w-3xl text-sm leading-7 text-muted-foreground">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">Gliss Workspace</p>
+              <h1 className="mt-3 max-w-5xl text-3xl font-semibold text-foreground md:text-5xl">Language learning that finally feels production-ready.</h1>
+              <p className="mt-3 max-w-5xl text-sm leading-7 text-muted-foreground">
                 Pick a model, choose a mode, and Gliss will stream a readable answer with real council reviews, working lesson widgets, and tool activity you can inspect.
               </p>
             </div>
@@ -304,7 +305,7 @@ export function ChatInterface() {
                   className={cn(
                     "rounded-[28px] border px-5 py-5 shadow-sm",
                     message.role === "user"
-                      ? "ml-auto max-w-3xl border-sky-100 bg-sky-50/80"
+                      ? "ml-auto max-w-[72rem] border-sky-100 bg-sky-50/80"
                       : "border-border/70 bg-background/80",
                   )}
                 >
@@ -340,7 +341,7 @@ export function ChatInterface() {
         ) : null}
       </div>
 
-      <div className="sticky bottom-0 mt-6">
+      <div className="mt-6">
         {notice ? (
           <div className={cn(
             "mb-3 rounded-2xl border px-4 py-3 text-sm leading-7 shadow-sm",
@@ -356,24 +357,19 @@ export function ChatInterface() {
 
         <div className="rounded-[32px] border border-border/70 bg-[rgba(255,255,255,0.94)] p-4 shadow-[0_18px_60px_rgba(15,23,42,0.12)] backdrop-blur-xl">
           <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap gap-2">
-              {modeMeta.map((item) => (
-                <Button
-                  key={item.id}
-                  type="button"
-                  variant={mode === item.id ? "secondary" : "ghost"}
-                  onClick={() => setMode(item.id)}
-                  className="rounded-2xl"
-                  aria-pressed={mode === item.id}
-                >
-                  <item.icon className="size-4" />
-                  {item.label}
-                </Button>
-              ))}
-            </div>
+            <Tabs value={mode} onValueChange={(value) => setMode(value as FeatureMode)} className="w-full max-w-full flex-1">
+              <TabsList className="flex w-full flex-wrap justify-start rounded-[1.35rem] border border-border/70 bg-slate-50/90">
+                {modeMeta.map((item) => (
+                  <TabsTrigger key={item.id} value={item.id} className="min-w-[140px] flex-none rounded-2xl sm:flex-1">
+                    <item.icon className="size-4" />
+                    {item.label}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <span className="hidden sm:inline">Mode</span>
-              <span className="rounded-full bg-muted px-3 py-1 text-foreground">{currentModeMeta.label}</span>
+              <span className="rounded-full bg-primary px-3 py-1 text-primary-foreground shadow-sm">{currentModeMeta.label}</span>
             </div>
           </div>
 
@@ -388,7 +384,7 @@ export function ChatInterface() {
             }}
             placeholder="Ask Gliss to explain, quiz, coach, or review language material..."
             rows={3}
-            className="min-h-[120px] rounded-[24px] border-border/70 bg-white/80 px-4 py-4 text-base leading-7"
+            className="min-h-[136px] rounded-[24px] border-border/70 bg-white/85 px-4 py-4 text-base leading-7"
           />
 
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3">

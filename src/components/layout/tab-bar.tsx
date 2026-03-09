@@ -23,14 +23,14 @@ export function TabBar() {
   ];
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center px-4 pb-4 pt-2">
-      <div className="pointer-events-auto flex w-full max-w-2xl items-center justify-between gap-2 rounded-[28px] border border-border/70 bg-[rgba(255,255,255,0.92)] px-3 py-2 shadow-[0_18px_60px_rgba(15,23,42,0.14)] backdrop-blur-xl">
-        <div className="flex flex-1 items-center gap-1">
+    <footer className="border-t border-border/70 bg-[rgba(255,255,255,0.86)] px-5 py-4 backdrop-blur-xl lg:px-8">
+      <div className="flex w-full items-center justify-between gap-4">
+        <div className="flex flex-1 items-center gap-2">
           {tabs.map((tab) => (
             <Button
               key={tab.id}
               type="button"
-              variant={activeView === tab.id ? "secondary" : "ghost"}
+              variant={activeView === tab.id ? "default" : "ghost"}
               onClick={() => setActiveView(tab.id)}
               className="flex-1 rounded-2xl"
             >
@@ -39,11 +39,11 @@ export function TabBar() {
             </Button>
           ))}
         </div>
-        <div className="hidden items-center gap-2 rounded-2xl border border-border/70 bg-muted/60 px-3 py-2 text-sm text-muted-foreground sm:flex">
+        <div className="hidden items-center gap-2 rounded-2xl border border-border/70 bg-muted/60 px-4 py-2 text-sm text-muted-foreground sm:flex">
           <Sparkles className="size-4 text-sky-600" />
           <span>{formatUsd(totalSpend)}</span>
         </div>
       </div>
-    </div>
+    </footer>
   );
 }

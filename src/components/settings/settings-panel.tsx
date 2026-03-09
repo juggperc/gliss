@@ -135,8 +135,10 @@ export function SettingsPanel() {
 
   return (
     <Sheet>
-      <SheetTrigger className="flex size-10 items-center justify-center rounded-2xl border border-border/70 bg-white/80 shadow-sm transition hover:border-primary/40 hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">
-        <Settings className="size-4 text-foreground" />
+      <SheetTrigger asChild>
+        <Button type="button" variant="outline" size="icon" className="rounded-2xl bg-white/80">
+          <Settings className="size-4 text-foreground" />
+        </Button>
       </SheetTrigger>
       <SheetContent className="w-full border-l border-border/70 bg-[rgba(249,250,251,0.98)] p-0 sm:max-w-xl">
         <SheetHeader className="border-b border-border/70 px-6 py-5">
