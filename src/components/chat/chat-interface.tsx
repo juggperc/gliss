@@ -273,21 +273,17 @@ export function ChatInterface() {
   const currentModeMeta = modeMeta.find((item) => item.id === mode) ?? modeMeta[0];
 
   return (
-    <section className="flex w-full flex-1 flex-col px-5 py-6 lg:px-8 lg:py-8">
-      <div className="flex flex-1 flex-col rounded-[32px] border border-border/70 bg-card/80 px-6 py-6 shadow-[0_18px_60px_rgba(15,23,42,0.06)] lg:px-8">
+    <section className="flex w-full flex-1 flex-col px-5 py-8 lg:px-8">
+      <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col">
         {isInitialState ? (
-          <div className="space-y-6">
-            <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">Gliss Workspace</p>
-              <h1 className="mt-3 max-w-5xl text-3xl font-semibold text-foreground md:text-5xl">Language learning that finally feels production-ready.</h1>
-              <p className="mt-3 max-w-5xl text-sm leading-7 text-muted-foreground">
-                Pick a model, choose a mode, and Gliss will stream a readable answer with real council reviews, working lesson widgets, and tool activity you can inspect.
-              </p>
+          <div className="flex flex-1 flex-col items-center justify-center gap-6 px-4 py-12 text-center">
+            <div className="space-y-3">
+              <h1 className="text-4xl font-semibold tracking-tight text-foreground md:text-5xl">Ask a question</h1>
             </div>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap items-center justify-center gap-3">
               <ModelPicker />
-              <div className="inline-flex items-center gap-2 rounded-2xl border border-border/70 bg-background/80 px-4 py-2 text-sm text-muted-foreground">
-                <Wrench className="size-4 text-sky-700" />
+              <div className="inline-flex items-center gap-2 rounded-2xl border border-border bg-background px-4 py-2 text-sm text-muted-foreground">
+                <Wrench className="size-4" />
                 {activeToolsCount} connected tools
               </div>
             </div>
@@ -305,8 +301,8 @@ export function ChatInterface() {
                   className={cn(
                     "rounded-[28px] border px-5 py-5 shadow-sm",
                     message.role === "user"
-                      ? "ml-auto max-w-[72rem] border-sky-100 bg-sky-50/80"
-                      : "border-border/70 bg-background/80",
+                      ? "ml-auto max-w-[72rem] border-border bg-muted/40"
+                      : "border-border bg-card",
                   )}
                 >
                   <div className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.2em] text-muted-foreground">
@@ -330,9 +326,7 @@ export function ChatInterface() {
                     )}
                   </div>
 
-                  {message.meta?.error ? (
-                    <p className="mt-4 rounded-2xl bg-rose-50 px-4 py-3 text-sm leading-7 text-rose-800">{message.meta.error}</p>
-                  ) : null}
+                  {message.meta?.error ? <p className="mt-4 rounded-2xl bg-destructive/10 px-4 py-3 text-sm leading-7 text-destructive">{message.meta.error}</p> : null}
                 </article>
               );
             })}
@@ -341,24 +335,24 @@ export function ChatInterface() {
         ) : null}
       </div>
 
-      <div className="mt-6">
+      <div className="mx-auto mt-8 w-full max-w-5xl">
         {notice ? (
           <div className={cn(
             "mb-3 rounded-2xl border px-4 py-3 text-sm leading-7 shadow-sm",
             notice.level === "error"
-              ? "border-rose-200 bg-rose-50 text-rose-900"
+              ? "border-destructive/20 bg-destructive/10 text-destructive"
               : notice.level === "warning"
-                ? "border-amber-200 bg-amber-50 text-amber-900"
-                : "border-sky-200 bg-sky-50 text-sky-900",
+                ? "border-border bg-muted text-foreground"
+                : "border-border bg-muted text-foreground",
           )} role="status" aria-live="polite">
             {notice.message}
           </div>
         ) : null}
 
-        <div className="rounded-[32px] border border-border/70 bg-[rgba(255,255,255,0.94)] p-4 shadow-[0_18px_60px_rgba(15,23,42,0.12)] backdrop-blur-xl">
+        <div className="rounded-[32px] border border-border bg-card p-4 shadow-sm">
           <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
             <Tabs value={mode} onValueChange={(value) => setMode(value as FeatureMode)} className="w-full max-w-full flex-1">
-              <TabsList className="flex w-full flex-wrap justify-start rounded-[1.35rem] border border-border/70 bg-slate-50/90">
+              <TabsList className="flex w-full flex-wrap justify-start rounded-[1.35rem]">
                 {modeMeta.map((item) => (
                   <TabsTrigger key={item.id} value={item.id} className="min-w-[140px] flex-none rounded-2xl sm:flex-1">
                     <item.icon className="size-4" />
@@ -368,8 +362,7 @@ export function ChatInterface() {
               </TabsList>
             </Tabs>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <span className="hidden sm:inline">Mode</span>
-              <span className="rounded-full bg-primary px-3 py-1 text-primary-foreground shadow-sm">{currentModeMeta.label}</span>
+              <span className="rounded-full border border-border bg-muted px-3 py-1 text-foreground">{currentModeMeta.label}</span>
             </div>
           </div>
 
@@ -384,14 +377,14 @@ export function ChatInterface() {
             }}
             placeholder="Ask Gliss to explain, quiz, coach, or review language material..."
             rows={3}
-            className="min-h-[136px] rounded-[24px] border-border/70 bg-white/85 px-4 py-4 text-base leading-7"
+            className="min-h-[136px] rounded-[24px] border-border bg-background px-4 py-4 text-base leading-7"
           />
 
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
             <div className="flex flex-wrap items-center gap-3">
               <ModelPicker />
-              <div className="inline-flex items-center gap-2 rounded-2xl border border-border/70 bg-background/80 px-4 py-2 text-sm text-muted-foreground">
-                <Wrench className="size-4 text-sky-700" />
+              <div className="inline-flex items-center gap-2 rounded-2xl border border-border bg-background px-4 py-2 text-sm text-muted-foreground">
+                <Wrench className="size-4" />
                 {activeToolsCount} connected tools
               </div>
             </div>
@@ -401,9 +394,7 @@ export function ChatInterface() {
             </Button>
           </div>
 
-          <p className="mt-3 text-xs leading-6 text-muted-foreground">
-            Gliss can still make mistakes. Review important facts, especially when a lesson result is going to be reused.
-          </p>
+          <p className="mt-3 text-xs leading-6 text-muted-foreground">Review important facts before relying on generated study material.</p>
         </div>
       </div>
     </section>

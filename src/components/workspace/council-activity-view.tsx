@@ -17,7 +17,7 @@ export function CouncilActivityView() {
     return (
       <section className="flex w-full flex-1 items-center justify-center px-5 py-12 lg:px-8">
         <div className="max-w-lg rounded-[32px] border border-dashed border-border bg-card/80 px-8 py-10 text-center shadow-[0_18px_60px_rgba(15,23,42,0.06)]">
-          <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-muted text-sky-700">
+          <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-muted text-foreground">
             <BrainCircuit className="size-7" />
           </div>
           <h2 className="mt-5 text-2xl font-semibold text-foreground">Council activity is empty right now</h2>
@@ -82,7 +82,7 @@ export function CouncilActivityView() {
                     {run.toolEvents.map((event) => (
                       <div key={event.id} className="rounded-2xl border border-border/70 px-4 py-3">
                         <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                          <Wrench className="size-4 text-sky-700" />
+                          <Wrench className="size-4" />
                           <span>{event.displayName}</span>
                           <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">{event.type}</span>
                         </div>

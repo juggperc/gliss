@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
 
+import { BrandLockup } from "@/components/layout/brand-lockup";
 import { WorkspaceNav } from "@/components/layout/workspace-nav";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -13,11 +14,12 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        "hidden h-dvh shrink-0 border-r border-border/70 bg-white/72 px-4 py-4 backdrop-blur-xl lg:flex lg:flex-col",
+        "hidden h-dvh shrink-0 border-r border-border bg-sidebar px-4 py-4 lg:flex lg:flex-col",
         collapsed ? "w-[116px]" : "w-[348px]",
       )}
     >
-      <div className="mb-4 flex items-center justify-end">
+      <div className="mb-5 flex items-center justify-between gap-3 px-2">
+        {collapsed ? <BrandLockup compact /> : <BrandLockup />}
         <Button
           type="button"
           variant="ghost"

@@ -16,7 +16,7 @@ export function SavedLessonsView() {
     return (
       <section className="flex w-full flex-1 items-center justify-center px-5 py-12 lg:px-8">
         <div className="max-w-lg rounded-[32px] border border-dashed border-border bg-card/80 px-8 py-10 text-center shadow-[0_18px_60px_rgba(15,23,42,0.06)]">
-          <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-muted text-sky-700">
+          <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-muted text-foreground">
             <BookMarked className="size-7" />
           </div>
           <h2 className="mt-5 text-2xl font-semibold text-foreground">Saved lessons will appear here</h2>

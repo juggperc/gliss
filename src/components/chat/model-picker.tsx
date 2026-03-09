@@ -74,14 +74,14 @@ export function ModelPicker() {
       <PopoverTrigger asChild>
         <Button type="button" variant="outline" className="h-11 w-full min-w-[240px] justify-between rounded-2xl bg-white/85 px-3 sm:w-[320px]">
           <div className="flex min-w-0 items-center gap-2">
-            <Cpu className="size-4 shrink-0 text-sky-700" />
+            <Cpu className="size-4 shrink-0" />
             <span className="truncate font-medium text-foreground">{selectedModel.name || "Select a model"}</span>
           </div>
           <ChevronsUpDown className="size-4 shrink-0 text-muted-foreground" />
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent align="start" className="w-[min(92vw,360px)] rounded-[24px] border border-border/70 bg-white/96 p-0 shadow-[0_18px_60px_rgba(15,23,42,0.14)]">
+      <PopoverContent align="start" className="w-[min(92vw,360px)] rounded-[24px] border border-border bg-popover p-0 shadow-sm">
         <div className="flex items-center gap-2 border-b border-border/70 px-4 py-3">
           <Search className="size-4 text-muted-foreground" />
           <Input
@@ -95,7 +95,7 @@ export function ModelPicker() {
         <ScrollArea className="h-[340px]">
           <div className="space-y-1 p-2">
             {isLoading ? <p className="px-3 py-8 text-sm text-muted-foreground">Loading models...</p> : null}
-            {error ? <p className="px-3 py-8 text-sm text-rose-700">{error}</p> : null}
+            {error ? <p className="px-3 py-8 text-sm text-destructive">{error}</p> : null}
             {!isLoading && !error && filteredModels.length === 0 ? (
               <p className="px-3 py-8 text-sm text-muted-foreground">No matching models found.</p>
             ) : null}
@@ -111,7 +111,7 @@ export function ModelPicker() {
                     }}
                     className={cn(
                       "w-full rounded-2xl border border-transparent px-3 py-3 text-left transition focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30",
-                      activeModel === model.id ? "bg-sky-50 text-foreground" : "hover:border-border/70 hover:bg-muted/50",
+                      activeModel === model.id ? "bg-muted text-foreground" : "hover:border-border/70 hover:bg-muted/50",
                     )}
                   >
                     <div className="flex items-center justify-between gap-3">
@@ -119,7 +119,7 @@ export function ModelPicker() {
                         <p className="truncate text-sm font-medium text-foreground">{model.name}</p>
                         <p className="truncate text-xs text-muted-foreground">{model.id}</p>
                       </div>
-                      {activeModel === model.id ? <Check className="size-4 shrink-0 text-sky-700" /> : null}
+                      {activeModel === model.id ? <Check className="size-4 shrink-0" /> : null}
                     </div>
                     {model.contextLength ? (
                       <p className="mt-2 text-xs text-muted-foreground">Context window: {model.contextLength.toLocaleString()} tokens</p>

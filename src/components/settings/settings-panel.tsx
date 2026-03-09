@@ -166,7 +166,7 @@ export function SettingsPanel() {
 
           <div className="flex-1 overflow-y-auto px-6 py-6">
             {panelMessage ? (
-              <div role="status" aria-live="polite" className="mb-5 rounded-2xl border border-sky-100 bg-sky-50 px-4 py-3 text-sm leading-7 text-sky-900">
+              <div role="status" aria-live="polite" className="mb-5 rounded-2xl border border-border bg-muted px-4 py-3 text-sm leading-7 text-foreground">
                 {panelMessage}
               </div>
             ) : null}
@@ -257,14 +257,14 @@ export function SettingsPanel() {
                         <Button type="button" variant="outline" onClick={() => handleTestServer(server)} disabled={testingServerId === server.id} className="rounded-2xl">
                           {testingServerId === server.id ? "Testing..." : "Test"}
                         </Button>
-                        <Button type="button" variant="ghost" onClick={() => removeMcpServer(server.id)} className="rounded-2xl text-rose-700 hover:bg-rose-50 hover:text-rose-800">
+                        <Button type="button" variant="ghost" onClick={() => removeMcpServer(server.id)} className="rounded-2xl text-destructive hover:bg-destructive/10 hover:text-destructive">
                           Remove
                         </Button>
                       </div>
 
                       <div className="mt-4 text-sm text-muted-foreground">
                         <p>Tools available: {server.toolCount ?? 0}</p>
-                        {server.lastError ? <p className="mt-1 text-rose-700">{server.lastError}</p> : null}
+                        {server.lastError ? <p className="mt-1 text-destructive">{server.lastError}</p> : null}
                       </div>
                     </div>
                   )) : (

@@ -1,84 +1,49 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { Menu, MessageSquarePlus } from "lucide-react";
 
+import { BrandLockup } from "@/components/layout/brand-lockup";
 import { SettingsPanel } from "@/components/settings/settings-panel";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { WorkspaceNav } from "@/components/layout/workspace-nav";
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useChatStore } from "@/store/use-chat-store";
 
-function BrandLockup() {
-  return (
-    <div className="flex items-center gap-4">
-      <div className="relative size-14 overflow-hidden rounded-[1.35rem] bg-white shadow-[0_16px_36px_rgba(14,165,233,0.16)] ring-1 ring-sky-100">
-        <Image src="/logomark.png" alt="Gliss logo" fill className="object-contain p-1" priority />
-      </div>
-      <div className="relative h-10 w-[170px] sm:w-[210px]">
-        <Image src="/wordmark.png" alt="Gliss" fill className="object-contain object-left" priority />
-      </div>
-    </div>
-  );
-}
-
 export function Header() {
-  const { activeChatId, chats, activeView, createChat } = useChatStore();
+  const { createChat } = useChatStore();
   const [navOpen, setNavOpen] = useState(false);
-  const activeChat = activeChatId ? chats[activeChatId] : null;
-
-  const heading =
-    activeView === "chat"
-      ? activeChat?.title ?? "New Chat"
-      : activeView === "saved-lessons"
-        ? "Saved Lessons"
-        : "Council Activity";
-
-  const subheading =
-    activeView === "chat"
-      ? "Readable, tool-ready language support"
-      : activeView === "saved-lessons"
-        ? "Review and reuse your saved study material"
-        : "Inspect every council run, critique, and tool call";
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/70 bg-[rgba(249,250,251,0.86)] px-5 py-4 backdrop-blur-xl lg:px-8">
+    <header className="sticky top-0 z-40 border-b border-border bg-background/90 px-5 py-4 backdrop-blur lg:px-8">
       <div className="flex items-center justify-between gap-4">
-        <div className="flex min-w-0 items-center gap-3">
-          <div className="lg:hidden">
-            <Sheet open={navOpen} onOpenChange={setNavOpen}>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="rounded-2xl" aria-label="Open workspace navigation">
-                  <Menu className="size-4" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="left" className="w-[92vw] max-w-sm border-r border-border/70 bg-[rgba(249,250,251,0.97)] p-4">
-                <SheetHeader className="px-0 pb-4">
-                  <SheetTitle>Workspace</SheetTitle>
-                </SheetHeader>
-                <WorkspaceNav compact onNavigate={() => setNavOpen(false)} />
-              </SheetContent>
-            </Sheet>
-          </div>
-          <BrandLockup />
-          <div className="hidden min-w-0 md:block">
-            <p className="truncate text-sm font-semibold text-foreground">{heading}</p>
-            <p className="truncate text-xs uppercase tracking-[0.22em] text-muted-foreground">{subheading}</p>
-          </div>
+        <div className="flex items-center gap-3 lg:hidden">
+          <Sheet open={navOpen} onOpenChange={setNavOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="rounded-2xl" aria-label="Open workspace navigation">
+                <Menu className="size-4" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-[92vw] max-w-sm border-r border-border bg-background p-4">
+              <SheetHeader className="px-0 pb-4">
+                <SheetTitle className="sr-only">Workspace</SheetTitle>
+                <BrandLockup />
+              </SheetHeader>
+              <WorkspaceNav compact onNavigate={() => setNavOpen(false)} />
+            </SheetContent>
+          </Sheet>
+          <BrandLockup compact />
         </div>
 
-        <div className="flex items-center gap-2">
-          <Button type="button" variant="secondary" onClick={() => createChat()} className="rounded-2xl border border-border/70 bg-white/80">
+        <div className="hidden lg:block" />
+
+        <div className="ml-auto flex items-center gap-2">
+          <Button type="button" variant="outline" onClick={() => createChat()} className="rounded-2xl bg-background">
             <MessageSquarePlus className="size-4" />
             <span className="hidden sm:inline">New Chat</span>
           </Button>
+          <ThemeToggle />
           <SettingsPanel />
         </div>
       </div>

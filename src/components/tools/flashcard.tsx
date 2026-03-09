@@ -36,14 +36,14 @@ export function Flashcard({ data, allowSave = true }: FlashcardProps) {
 
   return (
     <div className="my-6 mx-auto w-full max-w-3xl">
-      <div className="overflow-hidden rounded-[2rem] border border-border/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(240,249,255,0.96))] shadow-[0_24px_80px_rgba(15,23,42,0.10)]">
+      <div className="overflow-hidden rounded-[2rem] border border-border bg-card shadow-sm">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/70 px-5 py-4 md:px-6">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">Flashcard</p>
             <h3 className="mt-1 text-base font-semibold text-foreground">{cardTitle}</h3>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-xs uppercase tracking-[0.18em] text-sky-800">
+            <span className="rounded-full border border-border bg-muted px-3 py-1 text-xs uppercase tracking-[0.18em] text-muted-foreground">
               {isFlipped ? "Answer side" : "Prompt side"}
             </span>
             {allowSave ? (
@@ -67,12 +67,12 @@ export function Flashcard({ data, allowSave = true }: FlashcardProps) {
             type="button"
             whileTap={{ scale: 0.995 }}
             onClick={() => setIsFlipped((current) => !current)}
-            className="block w-full rounded-[1.75rem] border border-border/70 bg-white/80 p-6 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] transition focus-visible:ring-2 focus-visible:ring-ring/50 md:p-8"
+            className="block w-full rounded-[1.75rem] border border-border bg-background p-6 text-left transition focus-visible:ring-2 focus-visible:ring-ring/50 md:p-8"
             aria-pressed={isFlipped}
           >
             <div className="flex items-center justify-between gap-3">
               <div className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-xs uppercase tracking-[0.18em] text-slate-700">
-                <Sparkles className="size-3.5 text-sky-700" />
+                <Sparkles className="size-3.5" />
                 {isFlipped ? "Back" : "Front"}
               </div>
               <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-muted-foreground">

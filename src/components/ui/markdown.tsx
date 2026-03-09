@@ -16,7 +16,7 @@ function tryParseStructuredBlock(rawValue: string) {
 
 export function Markdown({ content }: { content: string }) {
   return (
-    <div className="prose prose-slate max-w-none prose-headings:font-semibold prose-headings:text-foreground prose-p:leading-7 prose-li:leading-7 prose-pre:rounded-2xl prose-pre:border prose-pre:border-border/70 prose-pre:bg-slate-950 prose-pre:px-0 prose-pre:py-0 prose-code:text-sky-700 prose-strong:text-foreground">
+    <div className="prose prose-neutral max-w-none prose-headings:font-semibold prose-headings:text-foreground prose-p:leading-7 prose-li:leading-7 prose-pre:rounded-2xl prose-pre:border prose-pre:border-border prose-pre:bg-slate-950 prose-pre:px-0 prose-pre:py-0 prose-code:text-foreground prose-strong:text-foreground dark:prose-invert">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
@@ -25,7 +25,7 @@ export function Markdown({ content }: { content: string }) {
               {...props}
               target="_blank"
               rel="noreferrer"
-              className="font-medium text-sky-700 underline decoration-sky-200 underline-offset-4 hover:text-sky-800"
+              className="font-medium text-foreground underline decoration-border underline-offset-4 hover:text-foreground/80"
             />
           ),
           code({ className, children, ...props }) {
@@ -60,7 +60,7 @@ export function Markdown({ content }: { content: string }) {
 
             if (!language) {
               return (
-                <code className="rounded-md bg-muted px-1.5 py-0.5 text-[0.92em] text-sky-700" {...props}>
+                <code className="rounded-md bg-muted px-1.5 py-0.5 text-[0.92em] text-foreground" {...props}>
                   {children}
                 </code>
               );
